@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuthStore } from "@/store/useAuthStore"
-import { purchaseProduct } from "@/lib/authLogin"
+import { purchaseProduct } from "@/lib/api"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
@@ -60,7 +60,7 @@ export default function BuyNowButton({
   return (
     <button
       onClick={handleBuy}
-      className="block mt-6 bg-white text-black py-2 rounded-lg font-semibold"
+      className="block mt-6 bg-white text-black p-[10px] w-[116px] h-[42px] text-[1rem] rounded-lg font-semibold"
       disabled={loading}
     >
       {loading ? "Processing..." : "Buy Now"}

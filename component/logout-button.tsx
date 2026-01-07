@@ -1,5 +1,5 @@
 "use client"
-
+import Image from "next/image";
 import { useRouter } from "next/navigation"
 
 export default function LogoutButton() {
@@ -17,8 +17,11 @@ export default function LogoutButton() {
   }
 
   return (
-    <button onClick={handleLogout} className="text-red-600 font-medium">
-      Logout
+    <div className="flex gap-2">
+    <Image src="/UserCircle.png" alt="logo" width={25} height={25}/>
+    <button onClick={handleLogout} className="text-white font-bold">
+      Log Out
     </button>
+    </div>
   )
 }

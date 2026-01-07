@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { verifyUser, loginRegister } from '@/lib/authLogin'
+import { verifyUser, loginRegister } from '@/lib/api'
 import { useAuthStore } from '@/store/useAuthStore'
 
 type Step = 'PHONE' | 'OTP' | 'NAME'

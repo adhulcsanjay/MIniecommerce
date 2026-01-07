@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useAuthStore } from "@/store/useAuthStore"
-import { getUserOrders } from "@/lib/authLogin"
+import { getUserOrders } from "@/lib/api"
 import { useEffect, useState } from "react"
 
 interface Order {
