@@ -67,21 +67,7 @@ export default function OrdersPage() {
     );
   }
 
-  if (orders.length === 0) {
-    return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4">
-        <Image 
-          src="/nike-logo.svg" 
-          width={60} 
-          height={60} 
-          alt="logo" 
-          className="w-12 h-12 md:w-16 md:h-16"
-        />
-        <h1 className="text-white text-2xl md:text-3xl font-bold mt-4">My Orders</h1>
-        <p className="text-gray-400 mt-2">No orders found</p>
-      </div>
-    );
-  }
+  
 
   return (
     <div className="min-h-screen bg-[#161616] px-4 sm:px-6 md:px-8 lg:px-12 py-6 md:py-8 lg:py-12">
