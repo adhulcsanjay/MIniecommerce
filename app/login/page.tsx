@@ -1,5 +1,5 @@
 'use client'
-
+import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { verifyUser, loginRegister } from '@/lib/api'
@@ -151,106 +151,157 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black text-white px-4">
-      <div className="w-full max-w-sm space-y-6">
-        
-        {/* Back button for OTP and NAME steps */}
-        {step !== 'PHONE' && (
-          <button
-            onClick={handleBack}
-            className="text-sm text-gray-400 hover:text-white"
-          >
-            ← Back
-          </button>
-        )}
+  <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-black">
 
-        {/* ---------------- PHONE ---------------- */}
+    {/* LEFT IMAGE SECTION */}
+    <div className="relative hidden md:block">
+      <Image
+        src="/Frame 530.png" 
+        alt="Login Banner"
+        fill
+        className="object-cover"
+        priority
+      />
+    </div>
+
+    {/* RIGHT LOGIN SECTION */}
+    <div className="flex items-center justify-center px-6 py-10 bg-black text-white">
+      <div className="w-full max-w-xl space-y-6">
+
+        
+
+        {/* PHONE STEP */}
         {step === 'PHONE' && (
           <>
-            <h1 className="text-xl font-semibold text-center">Log In</h1>
-            <div className="space-y-4">
-              <input
-                placeholder="Enter Phone Number"
-                className="w-full bg-neutral-900 p-3 rounded"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                type="tel"
-              />
-              <button
-                onClick={handleVerifyPhone}
-                disabled={loading || !phone.trim()}
-                className="w-full bg-white text-black py-3 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Sending OTP...' : 'Continue'}
-              </button>
-            </div>
+            <h1 className="text-[2rem] font-semibold text-center mb-6">Log In</h1>
+
+            <label className="text-sm mb-4">Phone</label>
+            <input
+              placeholder="Enter Phone"
+              className="w-full bg-neutral-900 p-3 rounded"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              type="tel"
+            />
+
+            <button
+              onClick={handleVerifyPhone}
+              disabled={loading || !phone.trim()}
+              className="w-full mt-3 bg-white text-black p-3 rounded disabled:opacity-50"
+            >
+              {loading ? 'Sending OTP...' : 'Continue'}
+            </button>
           </>
         )}
 
-        {/* ---------------- OTP ---------------- */}
+        {/* OTP STEP */}
         {step === 'OTP' && (
           <>
-            <h1 className="text-xl font-semibold text-center">
-              Verify Phone
-            </h1>
-            <p className="text-center text-gray-400">
-              Enter OTP sent to {phone}
+            <h1 className="text-[2rem] font-semibold text-center mb-4">Verify Phone</h1>
+            <div className='flex justify-center gap-2'>
+            <p className=" text-gray-400 mb-4 text-[1rem]">
+              Enter OTP sent to {phone} 
             </p>
-            <div className="space-y-4">
-              <input
-                placeholder="Enter OTP"
-                className="w-full bg-neutral-900 p-3 rounded text-center tracking-widest"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                maxLength={6}
-              />
-              <button
-                onClick={handleVerifyOtp}
-                disabled={loading || !otp.trim()}
-                className="w-full bg-white text-black py-3 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Verifying...' : 'Verify OTP'}
-              </button>
+           
+            <button  className='w-4 h-4'
+            onClick={handleBack}>
+            <Image src="/Vector (2).png" alt="logo" width={10} height={10} className='w-4'/>
+            </button>
+          
+
             </div>
+            <label className="text-md mb-2 block">Enter OTP</label>
+
+<div className="flex justify-between gap-3 mb-4">
+  {[0, 1, 2, 3].map((index) => (
+    <input
+      key={index}
+      type="text"
+      maxLength={1}
+      value={otp[index] || ""}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/g, "");
+        if (!value) return;
+
+        const newOtp = otp.split("");
+        newOtp[index] = value;
+        const finalOtp = newOtp.join("");
+        setOtp(finalOtp);
+
+        // move to next box
+        const next = document.getElementById(`otp-${index + 1}`);
+        if (next) (next as HTMLInputElement).focus();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Backspace") {
+          const newOtp = otp.split("");
+          newOtp[index] = "";
+          setOtp(newOtp.join(""));
+
+          // move to previous
+          const prev = document.getElementById(`otp-${index - 1}`);
+          if (prev) (prev as HTMLInputElement).focus();
+        }
+      }}
+      id={`otp-${index}`}
+      className="
+        w-36 h-24 
+        bg-neutral-900 
+        rounded-xl
+        text-white 
+        text-center 
+        text-2xl 
+        tracking-widest
+      "
+    />
+  ))}
+</div>
+
+            <div className="text-sm text-gray-500">
+            Demo OTP: <span className="font-bold">{serverOtp}</span>
+          </div>
+            <button
+              onClick={handleVerifyOtp}
+              disabled={loading || !otp.trim()}
+              className="w-full mt-2 bg-white text-black p-3 rounded disabled:opacity-50"
+            >
+              {loading ? 'Verifying...' : 'Verify OTP'}
+            </button>
           </>
         )}
 
-        {/* ---------------- NAME ---------------- */}
+        {/* NAME STEP */}
         {step === 'NAME' && (
           <>
-            <h1 className="text-xl font-semibold text-center">
-              Welcome! What's your name?
+            <h1 className="text-[2rem] font-semibold text-center mb-6">
+              Welcome, You are?
             </h1>
-            <div className="space-y-4">
-              <input
-                placeholder="Eg: John Mathew"
-                className="w-full bg-neutral-900 p-3 rounded"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <button
-                onClick={handleRegister}
-                disabled={loading || !name.trim()}
-                className="w-full bg-white text-black py-3 rounded disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Creating Account...' : 'Continue'}
-              </button>
-            </div>
+             <label className="text-md mb-2 block">Name</label>
+            <input
+              placeholder="Eg: John Mathew"
+              className="w-full bg-neutral-900 p-3 rounded"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <button
+              onClick={handleRegister}
+              disabled={loading || !name.trim()}
+              className="w-full mt-3 bg-white text-black p-3 rounded disabled:opacity-50"
+            >
+              {loading ? 'Creating Account...' : 'Continue'}
+            </button>
           </>
         )}
 
+        {/* Error message */}
         {error && (
           <p className="text-red-500 text-center text-sm py-2">{error}</p>
         )}
 
-        {/* OTP Info Message */}
-        {step === 'OTP' && serverOtp && (
-          <div className="text-center text-sm text-gray-500 mt-4">
-            <p>Demo OTP: <span className="font-bold">{serverOtp}</span></p>
-            <p className="text-xs mt-1">(Use this OTP for testing)</p>
-          </div>
-        )}
+
       </div>
     </div>
-  )
+  </div>
+);
 }

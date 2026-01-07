@@ -67,7 +67,7 @@ export default function ProductCard({ product, colorMap, imageUrl }: ProductCard
   return (
     <div
       ref={cardRef}
-      className="relative bg-[#232323] overflow-hidden p-6 h-[500px] flex flex-col cursor-pointer group"
+      className="relative bg-[#232323] overflow-hidden p-6 h-[430px] flex flex-col cursor-pointer group"
     >
 
       <div
@@ -90,12 +90,12 @@ export default function ProductCard({ product, colorMap, imageUrl }: ProductCard
       
 
         {/* Sizes - Centered */}
-        <div className="mb-4">
+        <div className="mb-3">
           <div className="flex flex-col items-center gap-2">
             
             <div className="flex items-center justify-center gap-2">
               <div>
-              <span className="text-lg text-gray-300 mb-2">SIZE:</span>
+              <span className="text-md text-gray-300 mb-2">SIZE:</span>
               </div>
               {defaultColor?.sizes?.map((size: any) => (
                 <span
@@ -117,12 +117,12 @@ export default function ProductCard({ product, colorMap, imageUrl }: ProductCard
         </div>
 
         {/* Colors - Centered */}
-        <div className="mb-1">
+        <div>
           <div className="flex flex-col items-center gap-2">
             
             <div className="flex items-center justify-center gap-3">
               <div>
-                <span className="text-lg text-gray-300 mb-2">COLOR:</span>
+                <span className="text-md text-gray-300 mb-2">COLOR:</span>
               </div>
               
               {product.variation_colors.map((color: any) => {
@@ -131,7 +131,7 @@ export default function ProductCard({ product, colorMap, imageUrl }: ProductCard
                   <span
                     key={color.color_id}
                     className={`
-                w-6 h-6 rounded-full cursor-pointer
+                w-5 h-5 rounded-full cursor-pointer
                 transition-all duration-300
                 ${isSelected ? "ring-2 ring-white ring-offset-2 ring-offset-black" : ""}
               `}

@@ -36,19 +36,31 @@ export default function BuyNowButton({
         token
       )
 
-      // Extract the first order detail from the response
-      const orderDetail = response.order.order_details[0] || response.order_details[0]
-      
-      // Redirect to success with order details
-       const params = new URLSearchParams({
-    product_name: orderDetail.product_name || product.name,
-    product_image: orderDetail.product_image || product.product_images?.[0]?.product_image,
-    quantity: orderDetail.quantity?.toString() || "1",
-    amount: orderDetail.amount?.toString() || product.price?.toString(),
-    price: orderDetail.price?.toString() || product.price?.toString(),
-  }).toString()
+      console.log("API Response:", response)
 
-      router.push(`/success?${params.toString()}`)
+      // IMPORTANT: The order ID is at response.order.id
+      const orderId = response.order?.id
+      console.log("Order ID:", orderId)
+      
+      const orderDetail = response.order?.order_details?.[0]
+      console.log("Order Detail:", orderDetail)
+
+      // Create URL parameters for success page
+      const params = new URLSearchParams({
+        product_name: orderDetail?.product_name || product.name || "",
+        product_image: orderDetail?.product_image || product.product_images?.[0]?.product_image || "",
+        quantity: orderDetail?.quantity?.toString() || "1",
+        amount: orderDetail?.amount?.toString() || product.price?.toString() || "0",
+        price: orderDetail?.price?.toString() || product.price?.toString() || "0",
+        id: orderId || "", // Use 'id' as parameter name (not 'order_id')
+      })
+
+      console.log("URL Params:", params.toString())
+      
+      const redirectUrl = `/success?${params.toString()}`
+      console.log("Redirecting to:", redirectUrl)
+
+      router.push(redirectUrl)
 
     } catch (error) {
       console.error("Purchase failed:", error)
