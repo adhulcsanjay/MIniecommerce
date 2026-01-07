@@ -10,7 +10,7 @@ export default async function Navbar() {
   const isAuth = cookieStore.has("access_token")
 
   return (
-    <nav className="flex justify-between items-center py-6 bg-[#191919] px-16">
+    <nav className="flex justify-between items-center py-6 bg-[#191919] px-8 md:px-16">
       
       <Link href="/" className="flex items-center">
                 <Image src="/Vector.png" alt="logo" width={60} height={60}/>
@@ -21,7 +21,7 @@ export default async function Navbar() {
         {isAuth ? (
           <LogoutButton /> 
         ) : (
-          <Link href="/login" className="text-white font-bold">Login</Link>
+          <Link href="/login" className="text-white font-bold">Log In</Link>
         )}
 
         <AuthHydration isAuth={isAuth} />
