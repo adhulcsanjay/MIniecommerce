@@ -133,7 +133,8 @@ export default function LoginPage() {
   const loginSuccess = (token: string) => {
     document.cookie = `access_token=${token}; path=/`
     setToken(token)
-    router.push('/')
+    window.location.href = "/"
+
   }
 
   // -----------------------------

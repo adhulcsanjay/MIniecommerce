@@ -52,7 +52,10 @@ export async function getUserOrders(token: string) {
 
 // 5️⃣ New Products
 export async function getNewProducts() {
-  const res = await fetch(`${CONFIG.API_BASE_URL}/api/new-products/`, { method: 'GET' })
+  const url = `${CONFIG.API_BASE_URL}/api/new-products/`;
+  console.log('Fetching from URL:', url); // Add this line
+  
+  const res = await fetch(url, { method: 'GET' })
   if (!res.ok) throw new Error((await res.json()).message || 'Fetch products failed')
   return res.json()
 }
